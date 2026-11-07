@@ -1,0 +1,13 @@
+# Entorno
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+# Secretos
+.env
+# Datos crudos (pesados; se regeneran con src/data/download.py)
+data/raw/*
+!data/raw/.gitkeep
+# Caché de modelos de embeddings
+.cache/
