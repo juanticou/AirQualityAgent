@@ -134,11 +134,15 @@ Todas consultadas o descargadas el **2026-11-06**.
 - El agente depende de un LLM externo (Groq, plan gratuito): hay límite de tokens por minuto y las respuestas pueden variar entre corridas.
 - Los datos llegan hasta el 2025-12-31: "hoy" en la app es la fecha más reciente disponible o la que elija el usuario.
 
+## Informe
+`docs/informe.pdf` (4 páginas) se genera desde `docs/informe.tex`: `cd docs` y luego `pdflatex informe.tex`
+(dos veces). La figura se toma de `results/figures/`. Hay una versión en Markdown en `docs/informe.md`.
+
 ## Lista de verificación antes de entregar
 - [ ] `git clone` → `pip install -r requirements.txt` → `streamlit run app.py` funciona siguiendo solo este README.
 - [ ] `python -m pytest -q` en verde.
 - [ ] La app arranca sin `.env` (chat desactivado con aviso).
 - [ ] `eval/results.md` actualizado con `python eval/run_eval.py`.
-- [ ] `docs/informe.md` (≤ 4 páginas) y `docs/declaracion_ia.md` completos, con nombre del grupo.
+- [ ] Informe (`docs/informe.tex` → `docs/informe.pdf`, 4 páginas; versión Markdown en `docs/informe.md`) y `docs/declaracion_ia.md` completos, con nombre del grupo.
 - [ ] `git ls-files | grep -i env` muestra solo `.env.example`.
 - [ ] Correo con asunto `si3003-AI-grupo-nombre`, enviado por cada integrante, con el enlace al repositorio.

@@ -11,3 +11,9 @@ data/raw/*
 !data/raw/.gitkeep
 # Caché de modelos de embeddings
 .cache/
+# LaTeX (auxiliares)
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.toc
+docs/*.synctex.gz
