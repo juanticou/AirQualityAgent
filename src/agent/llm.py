@@ -13,6 +13,18 @@ class LLMUnavailable(RuntimeError):
     """No hay API key o el endpoint no respondió tras el reintento."""
 
 
+MAX_RATE_LIMIT_WAIT_S = 30.0
+
+
+def _retry_wait(err) -> float:
+    """Segundos a esperar ante un 429: usa el encabezado retry-after del proveedor (tope 30 s)."""
+    try:
+        value = float(err.response.headers.get("retry-after", 5))
+    except (AttributeError, TypeError, ValueError):
+        value = 5.0
+    return min(max(value, 1.0), MAX_RATE_LIMIT_WAIT_S)
+
+
 def get_client():
     if not LLM_API_KEY:
         raise LLMUnavailable("Falta GROQ_API_KEY en .env: el chat está desactivado.")
@@ -39,7 +51,7 @@ def chat(messages: list[dict], tools: list[dict] | None = None, model: str | Non
         except (APIConnectionError, APITimeoutError, RateLimitError) as e:
             if intento == 1:
                 raise LLMUnavailable(f"El LLM no respondió tras reintentar: {type(e).__name__}") from e
-            time.sleep(3 if isinstance(e, RateLimitError) else 1)
+            time.sleep(_retry_wait(e) if isinstance(e, RateLimitError) else 1)
         except APIStatusError as e:
             if e.status_code >= 500 and intento == 0:
                 time.sleep(1)

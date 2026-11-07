@@ -18,3 +18,11 @@ son nuestras. Cada sesión queda registrada abajo.
   `src/rag/` (ingesta e índice FAISS/BM25); `src/agent/` (cliente LLM, herramientas, loop, prompt);
   tests en `tests/`. También buscó y descargó el corpus y verificó los rangos ICA contra la Res. 2254.
 - **Qué revisó o modificó el estudiante:** _[completar: qué se leyó, qué se cambió, qué se verificó a mano]_.
+
+### 2026-11-06 (cont.) — Claude Code (Claude Opus 5.5): primera prueba con Groq
+- **Qué se pidió:** correr el agente con la clave de Groq (`openai/gpt-oss-120b`) sobre 4 preguntas de prueba.
+- **Qué se encontró y corrigió:** límite de solicitudes por minuto (el reintento ahora respeta `retry-after`);
+  recomendaciones sin respaldo documental (prompt más estricto); una cita atribuida al documento equivocado
+  (campo `cita` listo para copiar y verificación de citas contra los fragmentos recuperados); formatos de cita
+  alternativos (`página`, `【…】`).
+- **Qué revisó o modificó el estudiante:** _[completar]_.

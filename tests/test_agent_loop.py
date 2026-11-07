@@ -96,3 +96,19 @@ def test_falla_del_llm_a_mitad_de_camino(patch_llm, monkeypatch):
     monkeypatch.setattr(loop, "chat", chat_then_fail)
     r = loop.run_agent("x")
     assert r.error == "rate limit" and "No pude completar" in r.answer
+
+
+def test_extraccion_de_citas_tolerante():
+    txt = "a [fuente: Res. 2254/2017, página 2] b [OMS 2021, p. 12] c [Doc X, pág. 3] d 【Doc Y, p. 7】"
+    assert loop.extract_citations(txt) == [("Doc X", 3), ("Doc Y", 7), ("OMS 2021", 12), ("Res. 2254/2017", 2)]
+
+
+def test_cita_no_recuperada_se_marca(patch_llm, monkeypatch):
+    docs = {"resultados": [{"fuente": "La Estrella", "pagina": 59, "texto": "..."}]}
+    monkeypatch.setattr(loop, "execute_tool", lambda n, a: (docs, 0.0))
+    patch_llm([
+        _resp(tool_calls=[_tool_call(1, "search_docs", '{"query": "niños"}')]),
+        _resp(content="Reducir esfuerzo [La Estrella, p. 59] y otra [Acuerdo 15, p. 59]."),
+    ])
+    r = loop.run_agent("niños")
+    assert r.unverified_citations == [("Acuerdo 15", 59)]

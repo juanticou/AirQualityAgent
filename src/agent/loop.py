@@ -20,7 +20,15 @@ from src.agent.prompts import SYSTEM_PROMPT, context_message
 from src.agent.tools import TOOLS_SCHEMA, execute_tool
 from src.config import T_MAX
 
-CITATION_RE = re.compile(r"\[([^\[\]]+?),\s*p\.\s*(\d+)\]")
+# acepta [..] y los corchetes 【..】 que usan algunos modelos (p. ej. gpt-oss)
+CITATION_RE = re.compile(r"[\[【](?:fuente:\s*)?([^\[\]【】]+?),\s*(?:p\.|pág\.|página)\s*(\d+)[\]】]",
+                         re.IGNORECASE)
+
+
+def extract_citations(text: str) -> list[tuple[str, int]]:
+    """Citas [fuente, p. N] de la respuesta (tolera 'página', 'fuente:' y espacios no estándar)."""
+    text = text.replace(" ", " ").replace(" ", " ")
+    return sorted(set((f.strip(), int(p)) for f, p in CITATION_RE.findall(text)))
 
 
 @dataclass
@@ -28,6 +36,7 @@ class AgentResult:
     answer: str
     trace: list[dict] = field(default_factory=list)
     citations: list[tuple[str, int]] = field(default_factory=list)
+    unverified_citations: list[tuple[str, int]] = field(default_factory=list)  # no recuperadas
     iterations: int = 0
     hit_t_max: bool = False
     error: str | None = None
@@ -56,6 +65,7 @@ def run_agent(question: str, history: list[dict] | None = None, estacion: str | 
     messages += list(history or [])
     messages.append({"role": "user", "content": question})
     trace: list[dict] = []
+    retrieved: set[tuple[str, int]] = set()   # (fuente, pagina) devueltos por search_docs
     try:
         client = get_client()
     except LLMUnavailable as e:
@@ -78,8 +88,10 @@ def run_agent(question: str, history: list[dict] | None = None, estacion: str | 
             if last:
                 answer = ("(Alcancé el límite de pasos de razonamiento; respondo con lo que tengo.)\n\n"
                           + answer)
+            cits = extract_citations(answer)
             return AgentResult(answer=answer, trace=trace, iterations=it, hit_t_max=last,
-                               citations=sorted(set((f.strip(), int(p)) for f, p in CITATION_RE.findall(answer))))
+                               citations=cits,
+                               unverified_citations=[c for c in cits if c not in retrieved])
         messages.append({"role": "assistant", "content": msg.content or "",
                          "tool_calls": [{"id": tc.id, "type": "function",
                                          "function": {"name": tc.function.name,
@@ -87,6 +99,8 @@ def run_agent(question: str, history: list[dict] | None = None, estacion: str | 
                                         for tc in msg.tool_calls]})
         for tc in msg.tool_calls:
             result, dt = execute_tool(tc.function.name, tc.function.arguments)
+            for r in result.get("resultados", []) if tc.function.name == "search_docs" else []:
+                retrieved.add((r["fuente"], int(r["pagina"])))
             trace.append({"tipo": "tool", "iteracion": it, "herramienta": tc.function.name,
                           "argumentos": tc.function.arguments, "resultado": _summarize(result),
                           "error": "error" in result, "latencia_s": round(dt, 2)})
@@ -104,7 +118,8 @@ def print_result(q: str, r: AgentResult) -> None:
                   f"{s['latencia_s']}s -> {s['resultado'][:220]}")
         else:
             print(f"  [it {s['iteracion']}] LLM {s['latencia_s']}s, tool_calls={s['tool_calls']}")
-    print(f"--- RESPUESTA ({r.iterations} iteraciones, T_MAX alcanzado={r.hit_t_max}, citas={r.citations})")
+    print(f"--- RESPUESTA ({r.iterations} iteraciones, T_MAX alcanzado={r.hit_t_max}, citas={r.citations}, "
+          f"citas_no_verificadas={r.unverified_citations})")
     print(r.answer)
 
 

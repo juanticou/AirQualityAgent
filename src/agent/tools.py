@@ -182,7 +182,8 @@ def search_docs(query: str, k: int = 4) -> dict:
 
     res = get_retriever().search(query, k)
     for r in res["resultados"]:
-        r["texto"] = r["texto"][:1200]
+        r["texto"] = r["texto"][:900]
+        r["cita"] = f"[{r['fuente']}, p. {r['pagina']}]"   # el LLM la copia literal
     if not res["encontrado"]:
         res["mensaje"] = "Ningún fragmento supera el umbral de relevancia: no hay respaldo documental."
     return res
