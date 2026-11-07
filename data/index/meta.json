@@ -1,0 +1,51 @@
+{
+  "backend": "faiss",
+  "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "n_chunks": 232,
+  "chunk_words": 350,
+  "overlap_words": 60,
+  "documentos": [
+    {
+      "archivo": "res_2254_2017_minambiente.pdf",
+      "paginas": 11,
+      "paginas_sin_texto": 0,
+      "chunks": 21
+    },
+    {
+      "archivo": "acuerdo_metropolitano_15_poeca.pdf",
+      "paginas": 23,
+      "paginas_sin_texto": 0,
+      "chunks": 40
+    },
+    {
+      "archivo": "resolucion_metropolitana_episodio_2022.pdf",
+      "paginas": 9,
+      "paginas_sin_texto": 0,
+      "chunks": 16
+    },
+    {
+      "archivo": "ideam_hoja_metodologica_ica_2025.pdf",
+      "paginas": 15,
+      "paginas_sin_texto": 0,
+      "chunks": 16
+    },
+    {
+      "archivo": "oms_directrices_calidad_aire_2021_resumen.pdf",
+      "paginas": 16,
+      "paginas_sin_texto": 1,
+      "chunks": 25
+    },
+    {
+      "archivo": "ops_guias_oms_2021_presentacion.pdf",
+      "paginas": 21,
+      "paginas_sin_texto": 10,
+      "chunks": 11
+    },
+    {
+      "archivo": "la_estrella_plan_accion_poeca_2019.pdf",
+      "paginas": 116,
+      "paginas_sin_texto": 24,
+      "chunks": 103
+    }
+  ]
+}
