@@ -1,0 +1,30 @@
+{
+  "fecha_descarga": "2026-11-06",
+  "fuentes": [
+    {
+      "fuente": "SIATA",
+      "ok": true,
+      "estaciones": 21,
+      "desde": "2023-07-31 04:00:00",
+      "hasta": "2024-07-31 04:00:00",
+      "archivo": "siata_pm25_snapshot.json"
+    },
+    {
+      "fuente": "AMVA datos abiertos",
+      "url": "https://datosabiertos.metropol.gov.co/api/3/action/package_show?id=mediciones-estaciones-calidad-del-aire",
+      "ok": false,
+      "status": 502,
+      "content_type": "text/html"
+    },
+    {
+      "fuente": "IDEAM-SISAIRE (datos.gov.co g4t8-zkc3)",
+      "ok": true,
+      "filas": 1046932
+    },
+    {
+      "fuente": "Open-Meteo (ERA5)",
+      "ok": true,
+      "archivo": "open_meteo_diario.csv"
+    }
+  ]
+}

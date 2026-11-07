@@ -1,0 +1,20 @@
+{
+  "horas_sisaire": 1042146,
+  "meses_estacion_escala_inconsistente": 715,
+  "horas_en_meses_inconsistentes": 404789,
+  "horas_fuera_de_rango": 0,
+  "horas_rellenadas_siata": 46117,
+  "dias_descartados_menos_75pct": 1922,
+  "estaciones_descartadas_poca_historia": [
+    "29507",
+    "30731",
+    "32034"
+  ],
+  "estaciones_finales": 25,
+  "dias_estacion_finales": 28304,
+  "distribucion_clases": {
+    "normal": 27996,
+    "alerta": 307,
+    "critico": 1
+  }
+}
