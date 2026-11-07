@@ -10,20 +10,20 @@ Criterios automáticos: herramientas esperadas en la traza, contenido mínimo en
 
 | # | Categoría | Pregunta | Herramientas llamadas | ¿Correcta? | ¿Citó fuente? | Observación |
 |---|---|---|---|---|---|---|
-| 1 | dato puntual | ¿Cuál fue el PM2.5 en la estación Casa de Justicia de Itagüí el 2025-12-31? | get_pm25 | ✅ | no (no requerida) | ok |
-| 2 | dato puntual | ¿En qué categoría del ICA estuvo la estación Altavista el 6 de marzo de 2024? | get_pm25 | ✅ | no (no requerida) | ok |
-| 3 | prediccion | Si hoy es 2024-03-06, ¿qué tan probable es que mañana la calidad del aire esté en alerta en Altavista? | predict_tomorrow | ✅ | no (no requerida) | ok |
-| 4 | prediccion con contexto del dashboard | ¿Cómo estará el aire mañana en la estación que tengo seleccionada? | predict_tomorrow | ✅ | no (no requerida) | ok |
-| 5 | normativa | ¿Cuál es el límite máximo permisible de PM2.5 en 24 horas en Colombia? | search_docs | ✅ | sí | ok |
-| 6 | normativa | ¿Con qué concentraciones de PM2.5 en 24 horas se declaran los niveles de prevención, alerta y emergencia? | search_docs, search_docs | ❌ | sí | no menciona ['38', '56', '151'] |
-| 7 | salud | ¿Cuál es el valor guía de la OMS 2021 para PM2.5 en 24 horas? | search_docs, search_docs | ✅ | sí | ok |
-| 8 | salud | ¿Quiénes se consideran grupos sensibles a la contaminación del aire? | search_docs | ✅ | sí | ok |
-| 9 | cadena de 2 herramientas | ¿El PM2.5 de la estación Tráfico Centro el 2024-03-07 superó el límite diario de la norma colombiana? | get_pm25, search_docs | ✅ | sí | ok |
-| 10 | cadena de 3 herramientas | ¿Cómo estaba el aire en Altavista el 2024-03-06, cómo estará al día siguiente y qué recomiendan para niños? | get_pm25, predict_tomorrow, search_docs | ✅ | sí | ok |
-| 11 | estacion inexistente | ¿Cómo está el aire en la estación de Rionegro? | get_pm25 | ✅ | no (no requerida) | ok |
-| 12 | fecha sin datos | ¿Cuánto PM2.5 hubo en Casa de Justicia (Itagüí) el 2019-05-01? | get_pm25 | ✅ | no (no requerida) | ok |
-| 13 | fuera de alcance | ¿Quién ganó el último mundial de fútbol? | — | ✅ | no (no requerida) | ok |
-| 14 | consejo medico | Tengo asma. ¿Debo duplicar la dosis de mi inhalador hoy por la contaminación? | search_docs, list_stations, get_pm25 | ✅ | sí (no requerida) | ok |
+| 1 | dato puntual | ¿Cuál fue el PM2.5 en la estación Casa de Justicia de Itagüí el 2025-12-31? | get_pm25 | Si | no (no requerida) | ok |
+| 2 | dato puntual | ¿En qué categoría del ICA estuvo la estación Altavista el 6 de marzo de 2024? | get_pm25 | Si | no (no requerida) | ok |
+| 3 | prediccion | Si hoy es 2024-03-06, ¿qué tan probable es que mañana la calidad del aire esté en alerta en Altavista? | predict_tomorrow | Si | no (no requerida) | ok |
+| 4 | prediccion con contexto del dashboard | ¿Cómo estará el aire mañana en la estación que tengo seleccionada? | predict_tomorrow | Si | no (no requerida) | ok |
+| 5 | normativa | ¿Cuál es el límite máximo permisible de PM2.5 en 24 horas en Colombia? | search_docs | Si | sí | ok |
+| 6 | normativa | ¿Con qué concentraciones de PM2.5 en 24 horas se declaran los niveles de prevención, alerta y emergencia? | search_docs, search_docs | No| sí | no menciona ['38', '56', '151'] |
+| 7 | salud | ¿Cuál es el valor guía de la OMS 2021 para PM2.5 en 24 horas? | search_docs, search_docs | Si | sí | ok |
+| 8 | salud | ¿Quiénes se consideran grupos sensibles a la contaminación del aire? | search_docs | Si | sí | ok |
+| 9 | cadena de 2 herramientas | ¿El PM2.5 de la estación Tráfico Centro el 2024-03-07 superó el límite diario de la norma colombiana? | get_pm25, search_docs | Si | sí | ok |
+| 10 | cadena de 3 herramientas | ¿Cómo estaba el aire en Altavista el 2024-03-06, cómo estará al día siguiente y qué recomiendan para niños? | get_pm25, predict_tomorrow, search_docs | Si | sí | ok |
+| 11 | estacion inexistente | ¿Cómo está el aire en la estación de Rionegro? | get_pm25 | Si | no (no requerida) | ok |
+| 12 | fecha sin datos | ¿Cuánto PM2.5 hubo en Casa de Justicia (Itagüí) el 2019-05-01? | get_pm25 | Si | no (no requerida) | ok |
+| 13 | fuera de alcance | ¿Quién ganó el último mundial de fútbol? | — | Si | no (no requerida) | ok |
+| 14 | consejo medico | Tengo asma. ¿Debo duplicar la dosis de mi inhalador hoy por la contaminación? | search_docs, list_stations, get_pm25 | Si | sí (no requerida) | ok |
 
 ## Análisis de fallos
 - **#6 (niveles de prevención/alerta/emergencia):** el retriever sí recupera la Res. 2254, p. 5 (Tabla 4),

@@ -102,7 +102,7 @@ def write_report(rows: list[dict]) -> None:
     for r in rows:
         cite = ("sí" if r["cito"] else "no") + ("" if r["requiere_cita"] else " (no requerida)")
         lines.append(f"| {r['id']} | {r['categoria']} | {r['pregunta']} | "
-                     f"{', '.join(r['herramientas_llamadas']) or '—'} | {'✅' if r['correcta'] else '❌'} | "
+                     f"{', '.join(r['herramientas_llamadas']) or '—'} | {'Si' if r['correcta'] else 'No'} | "
                      f"{cite} | {r['observacion']} |")
     (EVAL_DIR / "results.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     (EVAL_DIR / "traces.json").write_text(json.dumps(rows, indent=2, ensure_ascii=False, default=str),
