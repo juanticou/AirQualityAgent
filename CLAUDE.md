@@ -241,7 +241,7 @@ calidad-aire-aburra/
 | Dom 8 nov | Evaluación Parte 1 cerrada; HMM si hay tiempo; esqueleto de app |
 | **Lun 9 nov** | **Checkpoint**: agente mínimo con 1 herramienta + dashboard esqueleto |
 | Lun 9 – Mié 11 nov | RAG, 3 herramientas, visualizaciones, interacción, evaluación del agente |
-| Jue 12 nov | **Congelar código.** README probado en entorno limpio, informe, declaración de IA, video plan B |
+| Jue 12 nov | **Congelar código.** README probado en entorno limpio, informe, declaración de IA |
 | Vie 13 nov, 6:00 p. m. | Entrega en GitHub + correo con asunto `si3003-AI-grupo-nombre` (cada integrante) |
 
 ## 12. Definición de "terminado"

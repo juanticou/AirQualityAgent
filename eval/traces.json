@@ -1,0 +1,824 @@
+[
+  {
+    "id": 1,
+    "categoria": "dato puntual",
+    "pregunta": "¿Cuál fue el PM2.5 en la estación Casa de Justicia de Itagüí el 2025-12-31?",
+    "herramienta_esperada": [
+      "get_pm25"
+    ],
+    "requiere_cita": false,
+    "debe_contener": [
+      "19.1|19,1"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": false,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "get_pm25"
+    ],
+    "citas": [],
+    "citas_no_verificadas": [],
+    "iteraciones": 2,
+    "latencia_s": 2.7,
+    "respuesta": "El 31 de diciembre de 2025 la estación **Casa de Justicia** en Itagüí registró una concentración de **PM2.5 de 19.1 µg/m³**, lo que corresponde a la categoría **Aceptable** del ICA.\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.77,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "get_pm25",
+        "argumentos": "{\"estacion\":\"Casa de Justicia Itagüí\",\"fecha\":\"2025-12-31\"}",
+        "resultado": "{\"estacion\": {\"id\": \"29493\", \"nombre\": \"CASA JUSTICIA\", \"municipio\": \"Itagüí\"}, \"fecha\": \"2025-12-31\", \"pm25_ug_m3\": 19.1, \"categoria_ica\": \"Aceptable\", \"color\": \"#ffff00\", \"rango_categoria\": \"13-37 µg/m³\", \"clase_proyecto\": \"normal\", \"supera_limite_diario_37\": false, \"ultimos_7_dias\": [{\"fecha\": \"2…",
+        "error": false,
+        "latencia_s": 0.09
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 0.77,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "categoria": "dato puntual",
+    "pregunta": "¿En qué categoría del ICA estuvo la estación Altavista el 6 de marzo de 2024?",
+    "herramienta_esperada": [
+      "get_pm25"
+    ],
+    "requiere_cita": false,
+    "debe_contener": [
+      "grupos sensibles",
+      "44.8|44,8"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": false,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "get_pm25"
+    ],
+    "citas": [],
+    "citas_no_verificadas": [],
+    "iteraciones": 2,
+    "latencia_s": 1.9,
+    "respuesta": "El 6 de marzo de 2024 la estación **Altavista** registró una concentración promedio de **44.8 µg/m³** de PM2.5, lo que corresponde a la categoría **“Dañina a grupos sensibles”** del ICA (rango 38‑55 µg/m³).  \n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.86,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "get_pm25",
+        "argumentos": "{\"estacion\":\"Altavista\",\"fecha\":\"2024-03-06\"}",
+        "resultado": "{\"estacion\": {\"id\": \"31371\", \"nombre\": \"ALTAVISTA\", \"municipio\": \"Medellín\"}, \"fecha\": \"2024-03-06\", \"pm25_ug_m3\": 44.8, \"categoria_ica\": \"Dañina a grupos sensibles\", \"color\": \"#ff7e00\", \"rango_categoria\": \"38-55 µg/m³\", \"clase_proyecto\": \"alerta\", \"supera_limite_diario_37\": true, \"ultimos_7_dias\": …",
+        "error": false,
+        "latencia_s": 0.0
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 0.86,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "categoria": "prediccion",
+    "pregunta": "Si hoy es 2024-03-06, ¿qué tan probable es que mañana la calidad del aire esté en alerta en Altavista?",
+    "herramienta_esperada": [
+      "predict_tomorrow"
+    ],
+    "requiere_cita": false,
+    "debe_contener": [
+      "91|0.909|0,909|90.9|90,9"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": false,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "predict_tomorrow"
+    ],
+    "citas": [],
+    "citas_no_verificadas": [],
+    "iteraciones": 2,
+    "latencia_s": 2.7,
+    "respuesta": "Según el modelo **Naive Bayes**, la probabilidad de que mañana (2024‑03‑07) la calidad del aire en Altavista esté en **alerta** (38–55 µg/m³) es **90.9 %**.  \nEl modelo **HMM** estima una probabilidad mucho menor, **2.5 %**, y predice como clase más probable **normal**.\n\n**¿Por qué la diferencia?**  \nEl HMM tiende a subestimar los episodios de alerta y crítico, mientras que el Naive Bayes suele asignar mayor peso a la tendencia actual y a las condiciones meteorológicas (hoy = 38–55 µg/m³, tendencia estable, lluvia baja, viento alto).  \n\n**Desempeño del modelo (prueba 2024‑2025):**  \n- Exactitud (accuracy): **98.85 %**  \n- F1‑macro: **0.5052**  \n- Recall (alerta o crítico): **0.4515**  \n- Precisión (alerta o crítico): **0.6284**  \n\nRecuerda que estas clases (normal ≤ 37 µg/m³, alerta 38–55 µg/m³, crítico ≥ 56 µg/m³) son una simplificación del proyecto basada en el ICA y **no sustituyen** los niveles oficiales de prevención, alerta y emergencia que declara el AMVA.\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.87,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "predict_tomorrow",
+        "argumentos": "{\"estacion\":\"Altavista\",\"fecha\":\"2024-03-06\"}",
+        "resultado": "{\"estacion\": {\"id\": \"31371\", \"nombre\": \"ALTAVISTA\", \"municipio\": \"Medellín\"}, \"fecha_base\": \"2024-03-06\", \"fecha_prediccion\": \"2024-03-07\", \"naive_bayes\": {\"probabilidades\": {\"normal\": 0.091, \"alerta\": 0.909, \"critico\": 0.0}, \"clase_mas_probable\": \"alerta\"}, \"features_usadas\": {\"nivel_hoy\": \"38-55 µ…",
+        "error": false,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 1.6,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "categoria": "prediccion con contexto del dashboard",
+    "pregunta": "¿Cómo estará el aire mañana en la estación que tengo seleccionada?",
+    "contexto": {
+      "estacion": "Villahermosa (Medellín)",
+      "fecha": "2025-12-31"
+    },
+    "herramienta_esperada": [
+      "predict_tomorrow"
+    ],
+    "requiere_cita": false,
+    "debe_contener": [
+      "normal",
+      "%|probabilidad"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": false,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "predict_tomorrow"
+    ],
+    "citas": [],
+    "citas_no_verificadas": [],
+    "iteraciones": 2,
+    "latencia_s": 2.5,
+    "respuesta": "Según el modelo, el día **2026‑01‑01** la calidad del aire en la estación **Villahermosa (Medellín)** tiene:\n\n- **Probabilidad de clase “normal”**: **99.9 %**  \n- **Probabilidad de clase “alerta”**: **0.1 %**  \n- **Probabilidad de clase “crítico”**: **0 %**\n\nAmbos algoritmos (Naive Bayes y HMM) coinciden en que la clase más probable es **normal**. El HMM, como suele ocurrir, tiende a subestimar los episodios de alerta o crítico, pero en este caso también indica una probabilidad prácticamente nula para esas clases.\n\n**Desempeño del modelo (prueba 2024‑2025)**  \n- Exactitud (accuracy): **98.85 %**  \n- F1‑macro: **0.5052**  \n- Recall para alerta o crítico: **0.4515**  \n- Precisión para alerta o crítico: **0.6284**  \n\nLas clases usadas son una simplificación del proyecto (normal ≤ 37 µg/m³, alerta 38‑55 µg/m³, crítico ≥ 56 µg/m³) y no sustituyen los niveles oficiales declarados por el AMVA.\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.79,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "predict_tomorrow",
+        "argumentos": "{\"estacion\":\"Villahermosa\",\"fecha\":\"2025-12-31\"}",
+        "resultado": "{\"estacion\": {\"id\": \"31367\", \"nombre\": \"VILLAHERMOSA\", \"municipio\": \"Medellín\"}, \"fecha_base\": \"2025-12-31\", \"fecha_prediccion\": \"2026-01-01\", \"naive_bayes\": {\"probabilidades\": {\"normal\": 0.999, \"alerta\": 0.001, \"critico\": 0.0}, \"clase_mas_probable\": \"normal\"}, \"features_usadas\": {\"nivel_hoy\": \"13-2…",
+        "error": false,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 1.53,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "categoria": "normativa",
+    "pregunta": "¿Cuál es el límite máximo permisible de PM2.5 en 24 horas en Colombia?",
+    "herramienta_esperada": [
+      "search_docs"
+    ],
+    "requiere_cita": true,
+    "debe_contener": [
+      "37"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": true,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "search_docs"
+    ],
+    "citas": [
+      [
+        "Res. 2254/2017 MinAmbiente",
+        2
+      ]
+    ],
+    "citas_no_verificadas": [],
+    "iteraciones": 2,
+    "latencia_s": 13.1,
+    "respuesta": "El límite máximo permisible de PM2.5 para una exposición de 24 horas en Colombia es **37 µg/m³** [Res. 2254/2017 MinAmbiente, p. 2].\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 1.2,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":5,\"query\":\"límite máximo permisible PM2.5 24 horas Colombia Resolución 2254 de 2017\"}",
+        "resultado": "5 fragmentos: Res. 2254/2017 MinAmbiente p.2; OPS, guías OMS 2021 (presentación) p.15; IDEAM, hoja metodológica ICA p.13; Acuerdo Metropolitano 15 (POECA) p.3; Res. 2254/2017 MinAmbiente p.10",
+        "error": false,
+        "latencia_s": 10.62
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 1.11,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "categoria": "normativa",
+    "pregunta": "¿Con qué concentraciones de PM2.5 en 24 horas se declaran los niveles de prevención, alerta y emergencia?",
+    "herramienta_esperada": [
+      "search_docs"
+    ],
+    "requiere_cita": true,
+    "debe_contener": [
+      "38",
+      "56",
+      "151"
+    ],
+    "correcta": false,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": true,
+    "observacion": "no menciona ['38', '56', '151']",
+    "herramientas_llamadas": [
+      "search_docs",
+      "search_docs"
+    ],
+    "citas": [
+      [
+        "Acuerdo Metropolitano 15 (POECA)",
+        9
+      ]
+    ],
+    "citas_no_verificadas": [],
+    "iteraciones": 3,
+    "latencia_s": 13.2,
+    "respuesta": "Los documentos oficiales que regulan los episodios críticos en el Valle de Aburrá establecen los rangos de concentración de **PM2.5 (24 h)** para los niveles de **alerta** y **emergencia**:\n\n| Nivel | Concentración (µg/m³) |\n|-------|----------------------|\n| **Alerta naranja** | 35,5 – 55,4 |\n| **Alerta roja – fase I** | 55,5 – 105,9 |\n| **Alerta roja – fase II** | 106 – 150,4 |\n| **Emergencia** | ≥ 150,5 |\n\nEstos valores aparecen en el **Acuerdo Metropolitano 15 (POECA)** del AMVA [Acuerdo Metropolitano 15 (POECA), p. 9].\n\nEn cuanto al **nivel de prevención**, los documentos consultados no indican una concentración específica; normalmente se considera que, cuando la concentración está por debajo del rango de alerta (es decir, < 35,5 µg/m³), no se declara ningún nivel de contingencia. No encontré un documento que respalde una cifra exacta para la prevención.\n\n---\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.91,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":5,\"query\":\"niveles de prevención alerta emergencia PM2.5 ICA Valle de Aburrá\"}",
+        "resultado": "5 fragmentos: Acuerdo Metropolitano 15 (POECA) p.9; Res. Metropolitana episodio 2022-II p.6; Res. 2254/2017 MinAmbiente p.5; IDEAM, hoja metodológica ICA p.2; La Estrella, plan de acción POECA 2019 p.13",
+        "error": false,
+        "latencia_s": 0.02
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 1.04,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 2,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":5,\"query\":\"niveles de prevención PM2.5 ICA prevención\"}",
+        "resultado": "5 fragmentos: Res. Metropolitana episodio 2022-II p.6; Acuerdo Metropolitano 15 (POECA) p.9; IDEAM, hoja metodológica ICA p.2; Res. 2254/2017 MinAmbiente p.3; Res. 2254/2017 MinAmbiente p.5",
+        "error": false,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 3,
+        "latencia_s": 11.0,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "categoria": "salud",
+    "pregunta": "¿Cuál es el valor guía de la OMS 2021 para PM2.5 en 24 horas?",
+    "herramienta_esperada": [
+      "search_docs"
+    ],
+    "requiere_cita": true,
+    "debe_contener": [
+      "15"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": true,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "search_docs",
+      "search_docs"
+    ],
+    "citas": [
+      [
+        "OMS 2021, resumen ejecutivo",
+        9
+      ]
+    ],
+    "citas_no_verificadas": [],
+    "iteraciones": 3,
+    "latencia_s": 108.6,
+    "respuesta": "El valor guía de la OMS (2021) para la exposición a PM₂.5 en un promedio de 24 h es **15 µg/m³**【OMS 2021, resumen ejecutivo, p. 9】.  \n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.92,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":5,\"query\":\"OMS 2021 guía PM2.5 24 horas valor guía\"}",
+        "resultado": "5 fragmentos: Res. Metropolitana episodio 2022-II p.5; Res. 2254/2017 MinAmbiente p.2; Res. Metropolitana episodio 2022-II p.7; La Estrella, plan de acción POECA 2019 p.18; Res. 2254/2017 MinAmbiente p.8",
+        "error": false,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 0.63,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 2,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":10,\"query\":\"OMS 2021 guía PM2.5 24 horas valor guía\"}",
+        "resultado": "8 fragmentos: Res. Metropolitana episodio 2022-II p.5; Res. 2254/2017 MinAmbiente p.2; Res. Metropolitana episodio 2022-II p.7; La Estrella, plan de acción POECA 2019 p.18; Res. 2254/2017 MinAmbiente p.8; Res. Metropolitana episodio 2022-II p.5; OPS, guías OMS 2021 (presentación) p.15; OMS 2021, resumen ejecutivo p.9",
+        "error": false,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 3,
+        "latencia_s": 12.57,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "categoria": "salud",
+    "pregunta": "¿Quiénes se consideran grupos sensibles a la contaminación del aire?",
+    "herramienta_esperada": [
+      "search_docs"
+    ],
+    "requiere_cita": true,
+    "debe_contener": [
+      "niños|ninos|infantes",
+      "mayores|ancianos"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": true,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "search_docs"
+    ],
+    "citas": [
+      [
+        "Res. 2254/2017 MinAmbiente",
+        8
+      ]
+    ],
+    "citas_no_verificadas": [],
+    "iteraciones": 2,
+    "latencia_s": 10.5,
+    "respuesta": "Los grupos sensibles a la contaminación del aire son las personas con enfermedades pulmonares, los niños, los adultos mayores y quienes realizan actividad física al aire libre de forma constante [Res. 2254/2017 MinAmbiente, p. 8].\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.92,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":5,\"query\":\"grupos sensibles contaminación del aire ICA grupos vulnerables\"}",
+        "resultado": "5 fragmentos: Res. 2254/2017 MinAmbiente p.8; Res. 2254/2017 MinAmbiente p.10; Acuerdo Metropolitano 15 (POECA) p.8; IDEAM, hoja metodológica ICA p.2; Acuerdo Metropolitano 15 (POECA) p.15",
+        "error": false,
+        "latencia_s": 0.02
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 9.3,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "categoria": "cadena de 2 herramientas",
+    "pregunta": "¿El PM2.5 de la estación Tráfico Centro el 2024-03-07 superó el límite diario de la norma colombiana?",
+    "herramienta_esperada": [
+      "get_pm25",
+      "search_docs"
+    ],
+    "requiere_cita": true,
+    "debe_contener": [
+      "53",
+      "37",
+      "supero|superó|excede|por encima|sí"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": true,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "get_pm25",
+      "search_docs"
+    ],
+    "citas": [
+      [
+        "Res. 2254/2017 MinAmbiente",
+        2
+      ]
+    ],
+    "citas_no_verificadas": [],
+    "iteraciones": 3,
+    "latencia_s": 76.1,
+    "respuesta": "El 7 de marzo de 2024 la estación **Tráfico Centro** registró una concentración promedio de **PM2.5 de 53 µg/m³** (categoría ICA “Dañina a grupos sensibles”)【...】.  \n\nSegún la **Resolución 2254 de 2017**, el límite máximo permisible para una exposición de 24 horas es **37 µg/m³**【Res. 2254/2017 MinAmbiente, p. 2】.  \n\nComo 53 µg/m³ > 37 µg/m³, el valor **superó el límite diario** establecido por la norma colombiana.  \n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.75,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "get_pm25",
+        "argumentos": "{\"estacion\":\"Tráfico Centro\",\"fecha\":\"2024-03-07\"}",
+        "resultado": "{\"estacion\": {\"id\": \"29509\", \"nombre\": \"TRÁFICO CENTRO\", \"municipio\": \"Medellín\"}, \"fecha\": \"2024-03-07\", \"pm25_ug_m3\": 53.0, \"categoria_ica\": \"Dañina a grupos sensibles\", \"color\": \"#ff7e00\", \"rango_categoria\": \"38-55 µg/m³\", \"clase_proyecto\": \"alerta\", \"supera_limite_diario_37\": true, \"ultimos_7_di…",
+        "error": false,
+        "latencia_s": 0.0
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 0.75,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 2,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":5,\"query\":\"Resolución 2254 de 2017 límite diario PM2.5 37 µg/m³\"}",
+        "resultado": "5 fragmentos: Res. 2254/2017 MinAmbiente p.2; OPS, guías OMS 2021 (presentación) p.15; Res. Metropolitana episodio 2022-II p.5; Res. 2254/2017 MinAmbiente p.8; La Estrella, plan de acción POECA 2019 p.7",
+        "error": false,
+        "latencia_s": 0.02
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 3,
+        "latencia_s": 1.67,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "categoria": "cadena de 3 herramientas",
+    "pregunta": "¿Cómo estaba el aire en Altavista el 2024-03-06, cómo estará al día siguiente y qué recomiendan para niños?",
+    "herramienta_esperada": [
+      "get_pm25",
+      "predict_tomorrow",
+      "search_docs"
+    ],
+    "requiere_cita": true,
+    "debe_contener": [
+      "44.8|44,8",
+      "alerta",
+      "aire libre"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": true,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "get_pm25",
+      "predict_tomorrow",
+      "search_docs"
+    ],
+    "citas": [
+      [
+        "Acuerdo Metropolitano 15 (POECA)",
+        19
+      ],
+      [
+        "La Estrella, plan de acción POECA 2019",
+        59
+      ],
+      [
+        "La Estrella, plan de acción POECA 2019",
+        94
+      ]
+    ],
+    "citas_no_verificadas": [],
+    "iteraciones": 4,
+    "latencia_s": 17.0,
+    "respuesta": "**Calidad del aire en Altavista (06‑03‑2024)**  \n- PM2.5: **44.8 µg/m³**  \n- Categoría ICA: **“Dañina a grupos sensibles”** (rango 38‑55 µg/m³) – clase *alerta*.\n\n**Predicción para el 07‑03‑2024**  \n\n| Modelo | Probabilidad normal | Probabilidad alerta | Probabilidad crítico |\n|--------|--------------------|---------------------|----------------------|\n| Naive Bayes | 0.091 | **0.909** | 0.000 |\n| HMM | **0.975** | 0.025 | 0.000 |\n\n- La clase más probable según Naive Bayes es *alerta*; el HMM indica *normal*.  \n- El HMM tiende a subestimar episodios de alerta/crítico, por lo que la predicción de alerta del Naive Bayes tiene mayor peso en este caso.  \n- Desempeño del modelo (prueba 2024‑2025): exactitud = 0.9885, F1‑macro = 0.5052, recall de alerta o crítico = 0.4515, precisión de alerta o crítico = 0.6284.  \n\n**Recomendaciones para niños cuando el ICA está “dañino a grupos sensibles”**  \n\n- Evitar que los niños y adolescentes realicen actividades al aire libre. [Acuerdo Metropolitano 15 (POECA), p. 19]  \n- Reducir el esfuerzo prolongado al aire libre y limitar el tiempo de exposición. [La Estrella, plan de acción POECA 2019, p. 59]  \n- Mantener a los establecimientos educativos informados diariamente del estado del aire y, de ser necesario, restringir el funcionamiento de los mismos. [La Estrella, plan de acción POECA 2019, p. 59]  \n- Estar atentos a signos y síntomas en niños menores de 5 años, como aumento de la frecuencia respiratoria, ruidos al respirar, falta de apetito, fiebre persistente, irritabilidad o somnolencia. [La Estrella, plan de acción POECA 2019, p. 94]  \n\n**Nota**: Estas recomendaciones provienen de los documentos oficiales del POECA y del plan de acción municipal; no sustituyen la orientación de un profesional de salud.\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 1.14,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "get_pm25",
+        "argumentos": "{\"estacion\":\"Altavista\",\"fecha\":\"2024-03-06\"}",
+        "resultado": "{\"estacion\": {\"id\": \"31371\", \"nombre\": \"ALTAVISTA\", \"municipio\": \"Medellín\"}, \"fecha\": \"2024-03-06\", \"pm25_ug_m3\": 44.8, \"categoria_ica\": \"Dañina a grupos sensibles\", \"color\": \"#ff7e00\", \"rango_categoria\": \"38-55 µg/m³\", \"clase_proyecto\": \"alerta\", \"supera_limite_diario_37\": true, \"ultimos_7_dias\": …",
+        "error": false,
+        "latencia_s": 0.0
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 0.81,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 2,
+        "herramienta": "predict_tomorrow",
+        "argumentos": "{\"estacion\":\"Altavista\",\"fecha\":\"2024-03-06\"}",
+        "resultado": "{\"estacion\": {\"id\": \"31371\", \"nombre\": \"ALTAVISTA\", \"municipio\": \"Medellín\"}, \"fecha_base\": \"2024-03-06\", \"fecha_prediccion\": \"2024-03-07\", \"naive_bayes\": {\"probabilidades\": {\"normal\": 0.091, \"alerta\": 0.909, \"critico\": 0.0}, \"clase_mas_probable\": \"alerta\"}, \"features_usadas\": {\"nivel_hoy\": \"38-55 µ…",
+        "error": false,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 3,
+        "latencia_s": 0.75,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 3,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":5,\"query\":\"recomendaciones para niños cuando el ICA es dañino a grupos sensibles\"}",
+        "resultado": "5 fragmentos: La Estrella, plan de acción POECA 2019 p.94; Acuerdo Metropolitano 15 (POECA) p.19; Acuerdo Metropolitano 15 (POECA) p.15; La Estrella, plan de acción POECA 2019 p.97; La Estrella, plan de acción POECA 2019 p.59",
+        "error": false,
+        "latencia_s": 0.02
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 4,
+        "latencia_s": 14.11,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "categoria": "estacion inexistente",
+    "pregunta": "¿Cómo está el aire en la estación de Rionegro?",
+    "herramienta_esperada": [
+      "get_pm25|list_stations"
+    ],
+    "requiere_cita": false,
+    "debe_contener": [
+      "no existe|no encontre|no encontré|no hay|no tengo|no cuenta|no dispon"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": false,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "get_pm25"
+    ],
+    "citas": [],
+    "citas_no_verificadas": [],
+    "iteraciones": 2,
+    "latencia_s": 10.8,
+    "respuesta": "No encontré una estación de PM2.5 con el nombre “Rionegro” en la base de datos. Las estaciones disponibles en el Valle de Aburrá incluyen, por ejemplo:\n\n- **TRÁFICO CENTRO** (Medellín)  \n- **ALTAVISTA** (Medellín)  \n- **TANQUES LA YE** (Medellín)  \n- **TRÁFICO SUR** (Sabaneta)  \n- **HOSPITAL MANUEL URIBE** (Envigado)  \n- **I.E. CONCEJO MUNICIPAL** (Itagüí)  \n\nSi deseas conocer el nivel de PM2.5 en alguna de estas ubicaciones, indícame cuál prefieres y te proporcionaré el dato más reciente.\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.92,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "get_pm25",
+        "argumentos": "{\"estacion\":\"Rionegro\"}",
+        "resultado": "ERROR: No existe la estación 'Rionegro' en los datos.",
+        "error": true,
+        "latencia_s": 0.0
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 9.59,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "categoria": "fecha sin datos",
+    "pregunta": "¿Cuánto PM2.5 hubo en Casa de Justicia (Itagüí) el 2019-05-01?",
+    "herramienta_esperada": [
+      "get_pm25"
+    ],
+    "requiere_cita": false,
+    "debe_contener": [
+      "no hay|sin dato|no tengo|no dispon|no encontre|no encontré|2020"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": false,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "get_pm25"
+    ],
+    "citas": [],
+    "citas_no_verificadas": [],
+    "iteraciones": 2,
+    "latencia_s": 2.2,
+    "respuesta": "No encontré un dato válido de PM2.5 para la estación **Casa de Justicia (Itagüí)** el 01 de mayo de 2019; la base de datos indica que los registros disponibles empiezan a partir del 1 de enero de 2020.\n\nSi deseas conocer la concentración de PM2.5 en esa estación para una fecha dentro del rango disponible (2020‑01‑01 a 2025‑12‑31), indícame la fecha que te interese. También puedo listar las estaciones que tengo registradas en Itagüí o en otro municipio para que elijas otra ubicación.\n\n---\n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 1.12,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "get_pm25",
+        "argumentos": "{\"estacion\":\"Casa de Justicia Itagüí\",\"fecha\":\"2019-05-01\"}",
+        "resultado": "ERROR: No hay dato válido para CASA JUSTICIA el 2019-05-01 (día sin dato o con < 75 % de horas válidas).",
+        "error": true,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 0.91,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "categoria": "fuera de alcance",
+    "pregunta": "¿Quién ganó el último mundial de fútbol?",
+    "herramienta_esperada": [],
+    "requiere_cita": false,
+    "debe_contener": [
+      "alcance|calidad del aire|no puedo"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": false,
+    "observacion": "ok",
+    "herramientas_llamadas": [],
+    "citas": [],
+    "citas_no_verificadas": [],
+    "iteraciones": 1,
+    "latencia_s": 1.0,
+    "respuesta": "Lo siento, esa información está fuera de mi alcance.  \n\nHerramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.78,
+        "tool_calls": 0
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "categoria": "consejo medico",
+    "pregunta": "Tengo asma. ¿Debo duplicar la dosis de mi inhalador hoy por la contaminación?",
+    "herramienta_esperada": [],
+    "requiere_cita": false,
+    "debe_contener": [
+      "medico|médico|profesional de salud|profesional de la salud"
+    ],
+    "correcta": true,
+    "herramientas_ok": true,
+    "cita_ok": true,
+    "cito": true,
+    "observacion": "ok",
+    "herramientas_llamadas": [
+      "search_docs",
+      "list_stations",
+      "get_pm25"
+    ],
+    "citas": [
+      [
+        "Res. 2254/2017 MinAmbiente",
+        8
+      ]
+    ],
+    "citas_no_verificadas": [],
+    "iteraciones": 4,
+    "latencia_s": 32.3,
+    "respuesta": "Hoy la estación **TRÁFICO CENTRO** (Medellín) registra un PM2.5 de **24.6 µg/m³** (fecha 2025‑12‑31), lo que corresponde a la categoría **Aceptable** del ICA (rango 13‑37 µg/m³).  \n\nSegún la **Resolución 2254/2017** del Ministerio de Ambiente, los grupos sensibles (personas con enfermedades pulmonares, niños, adultos mayores, etc.) pueden presentar síntomas respiratorios y **deben reducir su exposición a los contaminantes del aire** cuando la calidad es dañina para la salud [Res. 2254/2017 MinAmbiente, p. 8]. En una categoría “Aceptable” el riesgo es bajo, pero sigue siendo prudente evitar actividades intensas al aire libre si notas molestias.\n\n**Recomendación práctica**  \n- Mantén tu tratamiento de asma tal como lo indica tu médico; no aumentes la dosis sin su autorización.  \n- Si notas síntomas (tos, dificultad para respirar) o la calidad del aire empeora, reduce el tiempo al aire libre y busca lugares con aire más limpio.  \n- Consulta a tu profesional de salud para cualquier ajuste en tu medicación.  \n\nPara información oficial y alertas en tiempo real, revisa SIATA (siata.gov.co) o el Área Metropolitana del Valle de Aburrá.\n\n**Herramienta académica: no es consejo médico ni aviso oficial; consulta SIATA/AMVA para alertas oficiales.**",
+    "traza": [
+      {
+        "tipo": "llm",
+        "iteracion": 1,
+        "latencia_s": 0.87,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 1,
+        "herramienta": "search_docs",
+        "argumentos": "{\"k\":5,\"query\":\"recomendaciones asma contaminación ICA alto\"}",
+        "resultado": "5 fragmentos: OPS, guías OMS 2021 (presentación) p.8; Res. 2254/2017 MinAmbiente p.8; OPS, guías OMS 2021 (presentación) p.1; OMS 2021, resumen ejecutivo p.9; OMS 2021, resumen ejecutivo p.15",
+        "error": false,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 2,
+        "latencia_s": 1.47,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 2,
+        "herramienta": "list_stations",
+        "argumentos": "{\"municipio\":\"Medellín\"}",
+        "resultado": "{\"estaciones\": [{\"id\": \"29509\", \"nombre\": \"TRÁFICO CENTRO\", \"municipio\": \"Medellín\", \"lat\": 6.25271, \"lon\": -75.56966, \"datos_desde\": \"2020-01-01\", \"datos_hasta\": \"2025-12-31\"}, {\"id\": \"30732\", \"nombre\": \"TANQUES LA YE\", \"municipio\": \"Medellín\", \"lat\": 6.18257, \"lon\": -75.55072, \"datos_desde\": \"2020…",
+        "error": false,
+        "latencia_s": 0.0
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 3,
+        "latencia_s": 1.02,
+        "tool_calls": 1
+      },
+      {
+        "tipo": "tool",
+        "iteracion": 3,
+        "herramienta": "get_pm25",
+        "argumentos": "{\"estacion\":\"TRÁFICO CENTRO\"}",
+        "resultado": "{\"estacion\": {\"id\": \"29509\", \"nombre\": \"TRÁFICO CENTRO\", \"municipio\": \"Medellín\"}, \"fecha\": \"2025-12-31\", \"pm25_ug_m3\": 24.6, \"categoria_ica\": \"Aceptable\", \"color\": \"#ffff00\", \"rango_categoria\": \"13-37 µg/m³\", \"clase_proyecto\": \"normal\", \"supera_limite_diario_37\": false, \"ultimos_7_dias\": [{\"fecha\":…",
+        "error": false,
+        "latencia_s": 0.01
+      },
+      {
+        "tipo": "llm",
+        "iteracion": 4,
+        "latencia_s": 28.67,
+        "tool_calls": 0
+      }
+    ]
+  }
+]

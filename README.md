@@ -7,15 +7,41 @@ empeore y qué hacer, citando normativa y guías oficiales.
 > ⚠️ **Herramienta académica.** No es consejo médico ni una declaratoria oficial. Para alertas
 > oficiales consulta [SIATA](https://siata.gov.co) y el Área Metropolitana del Valle de Aburrá (AMVA).
 
-**Estado (2026-11-06):** datos, Parte 1 (NB + HMM + líneas base), RAG y agente listos y probados.
-Faltan el dashboard (`app.py`) y la evaluación del agente (`eval/`).
+**Inicio rápido** (después de la instalación): `streamlit run app.py` y abre http://localhost:8501.
 
 ## Componentes
 | Parte | Qué hace | Código |
 |---|---|---|
 | IA clásica | Naive Bayes categórico (clase de mañana) y HMM gaussiano de 3 estados (estado latente y predicción a un paso), escritos a mano en NumPy | `src/models/` |
 | Agente LLM | Loop manual con tool calling (`T_MAX = 6`); herramientas `get_pm25`, `predict_tomorrow`, `search_docs` y `list_stations`; RAG con citas `[fuente, p. N]` | `src/agent/`, `src/rag/` |
-| Dashboard | Streamlit (pendiente) | `app.py` |
+| Dashboard | Streamlit + Plotly: mapa por categoría ICA, serie con bandas ICA, estado latente del HMM, tarjeta de predicción y chat con traza | `app.py` |
+
+## Arquitectura
+```mermaid
+flowchart LR
+    subgraph Datos
+        A[IDEAM-SISAIRE<br/>PM2.5 horario AMVA] --> C[clean.py<br/>24 h, ≥75 % horas,<br/>control de escala]
+        B[SIATA] --> C
+        M[Open-Meteo ERA5] --> C
+        C --> P[(data/processed)]
+    end
+    subgraph Parte1[Parte 1 · NumPy]
+        P --> F[features.py] --> NB[Naive Bayes]
+        P --> H[HMM gaussiano]
+    end
+    subgraph RAG
+        D[(data/corpus PDF)] --> I[ingest.py] --> X[(FAISS / BM25)]
+    end
+    subgraph Agente[Agente LLM · loop manual T_MAX=6]
+        L[Groq LLM] <--> T{tools}
+        T --> G1[get_pm25] --> P
+        T --> G2[predict_tomorrow] --> NB & H
+        T --> G3[search_docs] --> X
+        T --> G4[list_stations]
+    end
+    U[Dashboard Streamlit] --> P & NB & H
+    U -- pregunta + estación/fecha --> L
+```
 
 ## Instalación (Python 3.13, CPU)
 ```bash
@@ -39,11 +65,13 @@ pasos 1 a 3 solo hacen falta para regenerarlos.
 | 1. Datos | `python -m src.data.download` y luego `python -m src.data.clean` | `data/raw/` (no versionado, ~120 MB) → `data/processed/` |
 | 2. Modelos | `python -m src.models.train` | `models/*.json`, `results/metrics_part1.json`, `results/figures/` |
 | 3. Índice RAG | `python -m src.rag.ingest` (la primera vez descarga el modelo de embeddings, ~470 MB) | `data/index/` |
-| Tests | `python -m pytest -q` | 48 tests |
+| Tests | `python -m pytest -q` | 52 tests |
 | Probar el retriever | `python -m src.rag.retriever "límite de PM2.5 en 24 horas"` | fragmentos con fuente y página |
 | Agente en consola | `python -m src.agent.loop "¿Cómo está el aire hoy en Itagüí?"` | respuesta y traza de herramientas |
+| **Dashboard** | `streamlit run app.py` | http://localhost:8501 |
+| Evaluación del agente | `python eval/run_eval.py` (~6 min por las pausas del plan gratuito de Groq) | `eval/results.md`, `eval/traces.json` |
 
-Con `make` instalado: `make data train index test`. Los notebooks `notebooks/01_eda.ipynb` y
+Con `make` instalado: `make data train index test app eval`. Los notebooks `notebooks/01_eda.ipynb` y
 `02_parte1_modelos.ipynb` solo leen lo que produce `src/`.
 
 ## Datos
@@ -79,6 +107,13 @@ con la persistencia en F1 macro, es más preciso cuando anuncia un episodio y en
 mucho mejores que la climatología. El HMM separa niveles de fondo (~12, 17 y 25 µg/m³), no
 episodios. Detalle en `results/metrics_part1.json` y `notebooks/02_parte1_modelos.ipynb`.
 
+## Evaluación del agente
+14 preguntas fijas (`eval/questions.yaml`) calificadas automáticamente con `python eval/run_eval.py`:
+**13/14 correctas (93 %)**, 14/14 con las herramientas esperadas y 6/6 con citas verificadas contra los
+fragmentos recuperados. El único fallo (niveles de declaratoria) se debe al OCR ilegible de la Tabla 4
+de la Res. 2254. Tabla completa y análisis en `eval/results.md`, trazas en `eval/traces.json`.
+Correr el script sobrescribe `results.md`, así que la sección de análisis de fallos hay que volver a escribirla a mano.
+
 ## Fuentes
 Todas consultadas o descargadas el **2026-11-06**.
 
@@ -96,4 +131,14 @@ Todas consultadas o descargadas el **2026-11-06**.
 - 2020 incluye la cuarentena por COVID-19, con emisiones atípicas.
 - La meteorología es reanálisis de baja resolución y del día *t*; no hay pronóstico del día siguiente.
 - El POECA del corpus es el Acuerdo Metropolitano 15 (versión SICLAS), no el Acuerdo 04 de 2018 vigente. La Res. 2254 viene de una copia escaneada con OCR, con algo de ruido en el texto.
+- El agente depende de un LLM externo (Groq, plan gratuito): hay límite de tokens por minuto y las respuestas pueden variar entre corridas.
 - Los datos llegan hasta el 2025-12-31: "hoy" en la app es la fecha más reciente disponible o la que elija el usuario.
+
+## Lista de verificación antes de entregar
+- [ ] `git clone` → `pip install -r requirements.txt` → `streamlit run app.py` funciona siguiendo solo este README.
+- [ ] `python -m pytest -q` en verde.
+- [ ] La app arranca sin `.env` (chat desactivado con aviso).
+- [ ] `eval/results.md` actualizado con `python eval/run_eval.py`.
+- [ ] `docs/informe.md` (≤ 4 páginas) y `docs/declaracion_ia.md` completos, con nombre del grupo.
+- [ ] `git ls-files | grep -i env` muestra solo `.env.example`.
+- [ ] Correo con asunto `si3003-AI-grupo-nombre`, enviado por cada integrante, con el enlace al repositorio.
