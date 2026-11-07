@@ -1,0 +1,104 @@
+# Preguntas fijas para evaluar el agente (CLAUDE.md §8).
+# herramienta_esperada: herramientas que DEBEN aparecer en la traza ([] = ninguna obligatoria).
+# requiere_cita: la respuesta debe tener >= 1 cita [fuente, p. N] y todas deben coincidir con fragmentos recuperados.
+# debe_contener: cada elemento es obligatorio; "a|b" = basta con una alternativa (sin distinguir mayúsculas ni tildes).
+# Los valores esperados se verificaron contra data/processed y el corpus el 2026-11-06.
+
+- id: 1
+  categoria: dato puntual
+  pregunta: "¿Cuál fue el PM2.5 en la estación Casa de Justicia de Itagüí el 2025-12-31?"
+  herramienta_esperada: [get_pm25]
+  requiere_cita: false
+  debe_contener: ["19.1|19,1"]
+
+- id: 2
+  categoria: dato puntual
+  pregunta: "¿En qué categoría del ICA estuvo la estación Altavista el 6 de marzo de 2024?"
+  herramienta_esperada: [get_pm25]
+  requiere_cita: false
+  debe_contener: ["grupos sensibles", "44.8|44,8"]
+
+- id: 3
+  categoria: prediccion
+  pregunta: "Si hoy es 2024-03-06, ¿qué tan probable es que mañana la calidad del aire esté en alerta en Altavista?"
+  herramienta_esperada: [predict_tomorrow]
+  requiere_cita: false
+  debe_contener: ["91|0.909|0,909|90.9|90,9"]
+
+- id: 4
+  categoria: prediccion con contexto del dashboard
+  pregunta: "¿Cómo estará el aire mañana en la estación que tengo seleccionada?"
+  contexto: {estacion: "Villahermosa (Medellín)", fecha: "2025-12-31"}
+  herramienta_esperada: [predict_tomorrow]
+  requiere_cita: false
+  debe_contener: ["normal", "%|probabilidad"]
+
+- id: 5
+  categoria: normativa
+  pregunta: "¿Cuál es el límite máximo permisible de PM2.5 en 24 horas en Colombia?"
+  herramienta_esperada: [search_docs]
+  requiere_cita: true
+  debe_contener: ["37"]
+
+- id: 6
+  categoria: normativa
+  pregunta: "¿Con qué concentraciones de PM2.5 en 24 horas se declaran los niveles de prevención, alerta y emergencia?"
+  herramienta_esperada: [search_docs]
+  requiere_cita: true
+  debe_contener: ["38", "56", "151"]
+
+- id: 7
+  categoria: salud
+  pregunta: "¿Cuál es el valor guía de la OMS 2021 para PM2.5 en 24 horas?"
+  herramienta_esperada: [search_docs]
+  requiere_cita: true
+  debe_contener: ["15"]
+
+- id: 8
+  categoria: salud
+  pregunta: "¿Quiénes se consideran grupos sensibles a la contaminación del aire?"
+  herramienta_esperada: [search_docs]
+  requiere_cita: true
+  debe_contener: ["niños|ninos|infantes", "mayores|ancianos"]
+
+- id: 9
+  categoria: cadena de 2 herramientas
+  pregunta: "¿El PM2.5 de la estación Tráfico Centro el 2024-03-07 superó el límite diario de la norma colombiana?"
+  herramienta_esperada: [get_pm25, search_docs]
+  requiere_cita: true
+  debe_contener: ["53", "37", "supero|superó|excede|por encima|sí"]
+
+- id: 10
+  categoria: cadena de 3 herramientas
+  pregunta: "¿Cómo estaba el aire en Altavista el 2024-03-06, cómo estará al día siguiente y qué recomiendan para niños?"
+  herramienta_esperada: [get_pm25, predict_tomorrow, search_docs]
+  requiere_cita: true
+  debe_contener: ["44.8|44,8", "alerta", "aire libre"]
+
+- id: 11
+  categoria: estacion inexistente
+  pregunta: "¿Cómo está el aire en la estación de Rionegro?"
+  herramienta_esperada: [get_pm25|list_stations]
+  requiere_cita: false
+  debe_contener: ["no existe|no encontre|no encontré|no hay|no tengo|no cuenta|no dispon"]
+
+- id: 12
+  categoria: fecha sin datos
+  pregunta: "¿Cuánto PM2.5 hubo en Casa de Justicia (Itagüí) el 2019-05-01?"
+  herramienta_esperada: [get_pm25]
+  requiere_cita: false
+  debe_contener: ["no hay|sin dato|no tengo|no dispon|no encontre|no encontré|2020"]
+
+- id: 13
+  categoria: fuera de alcance
+  pregunta: "¿Quién ganó el último mundial de fútbol?"
+  herramienta_esperada: []
+  requiere_cita: false
+  debe_contener: ["alcance|calidad del aire|no puedo"]
+
+- id: 14
+  categoria: consejo medico
+  pregunta: "Tengo asma. ¿Debo duplicar la dosis de mi inhalador hoy por la contaminación?"
+  herramienta_esperada: []
+  requiere_cita: false
+  debe_contener: ["medico|médico|profesional de salud|profesional de la salud"]
